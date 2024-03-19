@@ -47,11 +47,12 @@ class ConvTasNet(torch.nn.Module):
     super().__init__()
     self.source_num = masks_num
     self.tdcnpp = tdcnpp
+    self.filters_num = filters_num
     self.encoder = Encoder(in_channels, filters_num, filters_len, enc_layer_num)
     self.separation = TDConvNetpp(filters_num, masks_num, filters_num, **tcn_kwargs) if tdcnpp else TDConvNet(filters_num, masks_num, filters_num, **tcn_kwargs)
     self.decoder = Decoder(filters_num, out_channels, filters_len, dec_layer_num)
       
-  def forward(self, x):
+  def forward(self, x, return_mask = False):
     '''
       x: [Batch, Channels, T]
     '''
@@ -79,5 +80,7 @@ class ConvTasNet(torch.nn.Module):
     # [[Batch, filters_num, t], ...]: len = mask_num
     
     sources = [self.decoder(m) for m in masked]
-
-    return sources
+    if return_mask:
+        return sources, m
+    else:
+        return sources
