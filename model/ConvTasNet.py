@@ -1,3 +1,10 @@
+'''
+Built with the help of the Asteroid Toolkit (https://asteroid-team.github.io/asteroid/package_reference/blocks.html), 
+some borrowed code from https://github.com/JusperLee/Conv-TasNet/  
+
+'''
+
+
 from asteroid.masknn.convolutional import TDConvNet, TDConvNetpp, DCUNetComplexEncoderBlock, DCUNetComplexDecoderBlock
 from torch.nn import Conv1d, ConvTranspose1d, PReLU, Sequential
 import torch
